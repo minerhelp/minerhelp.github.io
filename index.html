@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="挖矿教程，挖矿信息查询"><meta name="keywords" content=""><meta name="author" content="minerhelp"><meta name="copyright" content="minerhelp"><title>矿工家园</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.0.0'
+} </script><meta name="generator" content="Hexo 6.0.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="false"><div class="author-info"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">minerhelp</div><div class="author-info__description text-center">挖矿教程，挖矿信息查询</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">1</span></a></div></div></div><nav class="no-bg" id="nav"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">矿工家园</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">归档</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a></span><span class="pull-right"></span></div><div id="site-info"><div id="site-title">矿工家园</div><div id="site-sub-title"></div></div></nav><div id="content-outer"><div class="layout" id="content-inner"><div class="recent-post-item article-container"><a class="article-title" href="/2022/02/07/ethproxypage01/">以太坊ETH的SSL中转线路搭建教程—入门篇</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2022-02-07</time><div class="content"><p>自从上次国家封禁了各种矿池后，这些矿池的直连就容易掉线而无法使用了，大家都开始使用先转到境外服务器再连接矿池的中转方案，有些矿工不知道怎么设置中转而不得不使用别人提供的中转方案，其实别人是抽水的啦。我们下面写一个非常详细的基于轻松旷工的中转方案教程，尽量的详细，如果哪里写的还不够详细，欢迎私信咨询。按照教程搭好线路后，你就不用担心别人偷你的算力啦。本文介绍的方案虽然简单，但是有诸多缺点，比如你无法转发到除ethermine池(简称e池或者易池)之外的其他矿池(比如f2pool,poolin,antpool,hiveon),因为其他矿池没有支持ssl协议的端口，你也无法转发到e池只支持tcp协议的端口4444，实际上，使用其他池或者使用e池的4444端口，你的有效算力可能会有1%以上的提升，这些会在进阶篇介绍。</p>
+<p>轻松矿工直连矿池，默认是使用tcp协议进行网络传输的，tcp协议是明文不加密的，运营商很容易检测到这些内容，从而得知你正在干啥。如果把这些内容使用ssl加密后再转发出去，就可以大胆放心的搞了。因为这些主流矿池的端口已经被封了，单单加密还不行的，还得先转到境外的一个服务器，再由境外服务器转发到矿池即可。所以你只需要做两件事情即可，一个是设置一下轻松矿工软件，一个是自己买一个境外服务器。</p>
+<p><strong>第一步：服务器购买与设置</strong></p>
+<p>首先，我们要购买一个境外服务器，用关键字“境外服务器”到网上搜一下就有很多给你选了。这么多选择，我们最好买一个不用实名的服务器。为啥最好不实名？你懂的。我也好不容易找到一个不实名的（哪家公司就不说了，否则你会认为我写软文），买了一个香港服务器。挖矿其实用的流量是非常少的，我就选了一个最低配置就足够了。系统镜像，我选的是基于linux的ubuntu16.0.4系统，很便宜的，一年几百块就搞定了。购买过程中，需要你给服务器设定一个登录密码的。记得这个密码，以后进入服务器需要的。如下图所示</p>
+<p><img src="/images/dbfe167f96030715c6ee4a1222296f38.png"></p>
+<p>购买过程中，需要设置登录系统的密码，买到了之后，进入服务器提供商网站的后台，你就能看到你买到的服务器ip地址154.23.165.78（仅示范举例的地址）。如下图所示：</p>
+<p><img src="/images/23de8783e8c8a0a0d0312ce1850245fb.png"></p>
+<p>下载一个xshell工具，就可以进入服务器了。安装好xshell软件后，在xshell的文件菜单栏中新建会话，弹出如下对话框，然后在“主机”选项中输入IP地址154.23.165.78，选择点击“连接”按钮，如下图所示，然后xshell会弹出输入用户名和密码的提示。该用户名名称一般是root，用户名和密码都是在你够买服务器时自己设置的那个密码。</p>
+<p><img src="/images/b9bd82c247766e45866221ec9a5f65bb.png"></p>
+<p>然后就可以进入linux系统了，我们使用ssh工具进行转发即可，一般情况下，买到的服务器，基本都是已经安装好ssl工具的。输入ssh<br>-V 就可以查到当前ssh版本，就表示已经安装好了。如下图所示，会显示当前ssh工具的版本。如果还没有安装，就用关键字“linux ubuntu系统安装ssh”到网络上搜一下吧。</p>
+<p><img src="/images/a00a1a16e2cbb0251071a902b3e01616.png"></p>
+<p>输入ssh转发指令：</p>
+<p>ssh -fgN -L 2280:asia2.ethermine.org:5555 localhost</p>
+<p>系统提示你输入密码，输入密码后就可以开始转发了，如下图所示。你只需要在轻松旷工那边发数据过来，服务器就会帮你把ssl数据包转发到ethermine矿池中。</p>
+<p><img src="/images/a9a589437b0c1a2e83a12511339fa1aa.png"></p>
+<p>在上述命令中，需要了解几个参数的意义，2280表示本服务器监听的端口，这个端口，你可以随便取一个范围在0到65535的数字即可，一般取4位或者5位数吧，比如2280,4410等等，轻松旷工那边要设置给这个端口发送数据；asia2.ethermine.org表示矿池地址，5555是矿池的端口。asia2.ethermine.org:5555就是e池的网络地址和端口，是矿池官方提供的。其它的参数，不需要了解，照抄即可。</p>
+<p><strong>第二步：轻松旷工的设置。</strong></p>
+<p>轻松旷工如何使用，这里就不介绍了，想必大家都很熟悉。在轻松旷工的矿池列表中，选择列表最下面的“矿池管理”按钮，然后在弹出的矿池管理界面的右下角选择“添加”，如下图：</p>
+<p><img src="/images/92635c2e37d423828abacc4214da7c87.png"></p>
+<p>在弹出的矿池设置界面中，填入如下图地址stratum+ssl:&#x2F;&#x2F;154.23.165.78:2280，这个就是你所购买服务器的ip和设置的端口地址，然后点击“确定”按钮，返回主界面，选择你刚刚创建的矿池，然后就可以开始挖了</p>
+<p><img src="/images/012e9f19baabf21e11b253e7f7fc1e0c.png"></p>
+<p>到此，大功告成，如果你用的不是轻松旷工，也无所谓，都是差不多的，只需要在填写矿池地址的地方填入上述地址就可以了。当然，有些内核是不支持ssl的，只能纯tcp，这种情况下，本文介绍的方法是不管用的。我们会在进阶篇讲解解决方法。</p>
+</div><hr></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2022 By minerhelp</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_uv"><i class="fa fa-user"></i><span id="busuanzi_value_site_uv"></span><span></span></span><span class="footer-separator">|</span><span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i><span id="busuanzi_value_site_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
