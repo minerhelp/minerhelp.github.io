@@ -18,7 +18,7 @@
 <p><img src="/media/e05a9001fe2b0fb983e648cf34bf8185.jpeg"></p>
 <p>后面那些步骤基本是默认即可，购买成功后，就会有一个属于该服务器的ip地址，需要在安全组中开通你想要的端口，进入服务器关掉防火墙，还要把后面所下载的工具上传到服务器。这些操作的具体方法可以通过阿里云客服来解决的。如果你购买的是其他服务器商的服务器，也要记得确保端口开放出去的，关掉服务器防火墙，确保从其他机器能够ping到这台机器的ip地址。所有这些操作，都可以通过服务器商的客服来帮忙解决，这里不再赘述。建议读者第一次购买阿里云来练练手，因为它的售后服务很好，售后客服能帮你解决一切你不熟悉的问题。熟练后，就不要用它了，因为阿里云太正规了，懂的大家都懂。</p>
 <p>买好服务器后，我们在服务器中加上ssl解密和转发工具，ssl协议实际上也是基于tcp协议进行通信的，所以这个解密转发本质上就是一个tcp代理服务器。Tcp代理，在网络软件工具领域，是非常普遍的常用工具，我们在网络上去用关键字“tcpproxy”，“tcp代理”去搜，能搜到五花八门的各种tcp代理，实际上，这些工具都是可以用来转发数据的。最后我们在github网站找到了一款最符合我们需求的能支持ssl加密和解密的tcp代理工具，我们到github网站上搜一下“battle&#x2F;tcpproxy”就能直接找到下载地址而且有使用方法介绍，同时我们也下载了一份放在了网盘上：</p>
-<p><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/14x7vfKPGgkGfcLPJh_cNBw?pwd=ydev">https://pan.baidu.com/s/14x7vfKPGgkGfcLPJh_cNBw?pwd=ydev</a> 提取码：ydev</p>
+<p><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1e5fAyGMsB5gkJSppdIDAsA?pwd=ligg">https://pan.baidu.com/s/1e5fAyGMsB5gkJSppdIDAsA?pwd=ligg</a> 提取码：ligg</p>
 <p>下载后，上传到所购买服务器，解压后，在文件夹中会包含一个tcp代理转发工具tcpproxy_server.exe和使用方法文件README.md，先打开README.md文件详细阅读一下该工具的使用方法，然后在该工具所在的文件夹中新建一个文本文档，用记事本打开该文档，然后在文档中输入：</p>
 <p>tcpproxy_server.exe -m 2 -p 3100 -r asia1.ethermine.org:4444</p>
 <p>输入上面的命令过程中，一定要确保你的输入法是在英文输入状态下输入，同时要注意空格和字母大小写一致，” -m 2”表示从把接收到的ssl数据解密为tcp数据；” -p 3100”表示监听3100端口，这个端口是自己随便取的一个数字（范围在1024-65535），必须是你服务器已经开放出去的端口，后续你的本地电脑要给这个端口发数据的；“asia1.ethermine.org:4444”就是e矿池的目标地址，4444是e池支持tcp协议传输的tcp端口，如果你想转发到其他矿池，更改该地址就可以了。因为这里转发出去的数据是解密后的tcp明文数据，几乎所有矿池都是支持的。如果你挖的是btc,ltc等等，也都是可以的，直接更换这个地址即可。</p>
